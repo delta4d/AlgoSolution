@@ -1,0 +1,79 @@
+/*
+ID: delta 4d
+PROG: beads
+LANG: C++
+*/
+
+#include <cstdio>
+#include <cstring>
+#include <algorithm>
+using namespace std;
+
+const int INF = 0x3f3f3f3f;
+const int MAXL = 1024;
+char s[MAXL];
+bool visit[MAXL];
+
+inline int left(const int k, const int len) {
+	int i(k), j(0);
+	int ret(0);
+	char c;
+	while (s[i] == 'w' && j < len) {
+		--i;
+		++j;
+		if (i == -1) i = len - 1;
+	}
+	c = s[i];
+	for (i=k; ; --i) {
+		if (i == -1) i = len - 1;
+		if (visit[i]) return ret;
+		if (s[i] == 'w' || s[i] == c) ++ret, visit[i] = true;
+		else return ret;
+	}
+	return ret;
+}
+
+inline int right(const int k, const int len) {
+	int i(k), j(0);
+	int ret(0);
+	char c;
+	while (s[i] == 'w' && j < len) {
+		++i;
+		++j;
+		if (i == len) i = 0;
+	}
+	c = s[i];
+	for (i=k; ; ++i) {
+		if (i == len) i = 0;
+		if (visit[i]) return ret;
+		if (s[i] == 'w' || s[i] == s[k]) ++ret, visit[i] = true;
+		else return ret;
+	}
+	return ret;
+}
+
+inline int gao(int len) {
+	int i, j, k;
+	int ret(-INF);
+	int cur;
+	for (i=0; i<len; ++i) {
+		memset(visit, false, sizeof(visit));
+		cur = left(i, len) + right(i+1, len);
+		ret = max(cur, ret);
+	}
+	return ret;
+}
+
+int main() {
+	int i, j, k;
+	int len;
+	int m, n;
+	//freopen("f:\\in.txt", "r", stdin);
+	freopen("beads.in", "r", stdin);
+	freopen("beads.out", "w", stdout);
+	while (scanf("%d", &n) != EOF) {
+		scanf("%s", s);
+		printf("%d\n", gao(n));
+	}
+	return 0;
+}

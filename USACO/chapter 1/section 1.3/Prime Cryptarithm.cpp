@@ -1,0 +1,68 @@
+/*
+ID: delta 4d
+PROG: crypt1
+LANG: C++
+*/
+
+#include <cstdio>
+#include <cstring>
+#include <cstdlib>
+#include <algorithm>
+using namespace std;
+
+int f[10], cnt;
+bool visit[10];
+
+inline bool bad(int x) {
+	do {
+		if (!visit[x%10]) return false;
+		x /= 10;
+	} while (x);
+	return true;
+}
+
+bool judge(int a, int b) {
+	int i, j, k;
+	int c, d, e;
+	c = a * (b % 10);
+	d = a * (b / 10);
+	e = a * b;
+	return c >= 100 && c <= 999 && bad(c) &&
+	       d >= 100 && d <= 999 && bad(d) &&
+		   e >= 1000 && e <= 9999 && bad(e);
+}
+
+void dfs(int d, const int n, int a, int b) {
+	int i, j, k;
+	if (d == 5) {
+		if (judge(a, b)) {
+			++cnt;
+			//printf("%d %d\n", a, b);
+		}
+		return;
+	}
+	if (d < 3) {
+		for (i=0; i<n; ++i) {
+			dfs(d+1, n, a*10+f[i], b);
+		}
+	} else {
+		for (i=0; i<n; ++i) {
+			dfs(d+1, n, a, b*10+f[i]);
+		}
+	}
+}
+
+int main() {
+	int m, n;
+	int i, j, k;
+	freopen("crypt1.in", "r", stdin);
+	freopen("crypt1.out", "w", stdout);
+	while (scanf("%d", &n) == 1) {
+		memset(visit, false, sizeof(visit));
+		for (i=0; i<n; ++i) scanf("%d", f+i), visit[f[i]] = true;
+		cnt = 0;
+		dfs(0, n, 0, 0);
+		printf("%d\n", cnt);
+	}
+	return 0;
+}
