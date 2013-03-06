@@ -1,3 +1,3 @@
-## [CODEFORCES](http://www.codeforces.com/)
+[CODEFORCES](http://www.codeforces.com/)
 
-## [MY PROFILE](http://www.codeforces.com/profile/delta_4d)
+[MY PROFILE](http://www.codeforces.com/profile/delta_4d)
