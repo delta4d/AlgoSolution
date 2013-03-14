@@ -74,11 +74,6 @@ int main() {
 				ROOT += x;
 				t[k].modify(d, x);
 			}
-//			for (int i=0; i<t.size(); ++i) {
-//				printf("%d: ", i);
-//				for (int j=0; j<t[i].a.size(); ++j) printf("%d ", t[i].a[j]);
-//				puts("");
-//			}
 		}
 	}
 
