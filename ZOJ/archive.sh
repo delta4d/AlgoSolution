@@ -1,4 +1,5 @@
 #!/usr/bin/env sh
+# split the files to different dir
 
 for i in $(ls); do
 	x=${i%.*}
@@ -10,3 +11,5 @@ for i in $(ls); do
 		mv $i $d
 	fi
 done
+
+# vim:ts=4
