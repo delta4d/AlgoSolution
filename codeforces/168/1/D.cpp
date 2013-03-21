@@ -6,9 +6,9 @@ using namespace std;
 #define PB push_back
 #define F first
 #define S second
+#define OK 0
 #define NOTVISIT -1
 #define VISITING 1
-#define OK 0
 
 vector <pair<int, int> > a;
 vector <vector<int> > T;
