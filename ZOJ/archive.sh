@@ -8,7 +8,7 @@ for i in $(ls); do
 		d=$((x/100-9))
 		d=`printf "%02d" $d`
 		[[ ! -d $d ]] && mkdir $d
-		mv $i $d
+		git mv $i $d
 	fi
 done
 
