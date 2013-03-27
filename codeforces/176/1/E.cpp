@@ -16,12 +16,12 @@ namespace DFT {
 
 	void FFT(CD a[], const int N, const bool inv) {
 		const double sgn = inv ? 1 : -1;
-		for (int n=N>>1,t=2; n>0; n>>=1,t<<=1) {
-			CD w0(cos(2.0*PI/t), sgn*sin(2.0*PI/t)), w(1.0, 0.0);
-			for (int j=0; 2*j<t; ++j) {
+		for (int n=N>>1,t=1; n>0; n>>=1,t<<=1) {
+			CD w0(cos(PI/t), sgn*sin(PI/t)), w(1.0, 0.0);
+			for (int j=0; j<t; ++j) {
 				for (int i=0; i<n; ++i) {
 					b[i+n*j] = a[i+2*n*j] + w * a[i+n+2*n*j];	
-					b[i+n*(j+t/2)] = a[i+2*n*j] - w * a[i+n+2*n*j];
+					b[i+n*(j+t)] = a[i+2*n*j] - w * a[i+n+2*n*j];
 				}
 				w *= w0;
 			}	
@@ -65,4 +65,4 @@ int main() {
 	return 0;
 }
 
-// 3409000	 Mar 26, 2013 8:16:20 PM	delta_4d	 286E - Ladies' Shop	 GNU C++	Accepted	 3578 ms	 108800 KB
+// 3410236	 Mar 27, 2013 8:21:42 AM	delta_4d	 286E - Ladies' Shop	 GNU C++	Accepted	3625 ms	108800 KB
