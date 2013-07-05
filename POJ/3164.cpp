@@ -4,21 +4,20 @@
 #include <algorithm>
 using namespace std;
 
-typedef double elem_t;
 const int M = 128;
 const double INF = 999999999999999999.9;
 
 struct Node {
 	int u, v;
-	elem_t cost;
+	double cost;
 } E[M*M];
 
 int pre[M],ID[M],vis[M];
-elem_t In[M];
+double In[M];
 int x[M], y[M];
  
-elem_t gao(int root, int NV, int NE) {
-	elem_t ret = 0;
+double gao(int root, int NV, int NE) {
+	double ret = 0;
 	while(true) {
 		for (int i=0; i<NV; ++i) In[i] = INF;
 		for (int i=0; i<NE; ++i) {

@@ -90,7 +90,7 @@ int main() {
 		visit[t] = -1; dfs_t(t, n);
 		res = 0;
 		for (i=0; i<m; ++i) {
-			if (!flow[a[i]][b[i]])
+			if (!flow[a[i]][b[i]] || flow[b[i]][a[i]])
 			if (visit[a[i]] && visit[b[i]] && visit[a[i]]!=visit[b[i]]) ++res;
 		}
 		printf("%d\n", res);
