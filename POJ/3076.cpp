@@ -4,7 +4,7 @@
 using namespace std;
 
 const int MAXN = 4100;
-const int MAXV = 20000;
+const int MAXV = 50000;
 const int INF = 0x3f3f3f3f;
 
 int L[MAXV+1], R[MAXV+1], U[MAXV+1], D[MAXV+1];

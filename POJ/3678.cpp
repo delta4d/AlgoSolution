@@ -1,91 +1,140 @@
-#include <cstdio>
-#include <vector> 
-#include <cstring> 
-#include <algorithm>
-using namespace std; 
 
-#define MP(i,j) make_pair(i, j) 
-#define MAXN 2048
-int dfn[MAXN], low[MAXN], id[MAXN], num, st[MAXN], top, in[MAXN], tot; 
-vector <int> E[MAXN];
-int x[MAXN], y[MAXN];
-char op[16];
- 
-void tarjan(int now){ 
-	in[st[top++] = now] = true; 
-    dfn[now] = low[now] = ++tot;
-	int i; 
-    for (int ii = E[now].size() - 1; ii >= 0; --ii){ 
-        i = E[now][ii]; 
-        if (!dfn[i]){ 
-            tarjan(i); 
-            low[now] = min(low[now], low[i]);
+#include <stdio.h>
+#include <string.h>
+#include <iostream>
+using namespace std;
+int n,m;
+const int N=10000;
+const int M=5000000;
+typedef struct EDGE
+{
+    int v,next;
+};
+EDGE edge[M];
+int cnt,head[N];
+int scc,index,dfn[N],low[N],belong[N],num[N];
+int out[N],in[N],top,sstack[N];
+bool instack[N];
+void addedge(int u,int v)
+{
+    edge[cnt].v=v;
+    edge[cnt].next=head[u];
+    head[u]=cnt++;
+}
+int MIN(int a,int b)
+{
+    if(a>b)
+        return b;
+    return a;
+}
+void tarjan(int u)
+{
+    dfn[u]=low[u]=++index;
+    sstack[++top]=u;
+    instack[u]=true;
+    for(int j=head[u];j!=-1;j=edge[j].next)
+    {
+        int v=edge[j].v;
+        if(dfn[v]==0)
+        {
+            tarjan(v);
+            low[u]=MIN(low[v],low[u]);
         }
-		else if (in[i]) 
-            low[now] = min(low[now], dfn[i]); 
+        else if(instack[v])
+        {
+            low[u]=MIN(low[u],dfn[v]);
+        }
     }
-	if (dfn[now] == low[now]){
-    	do{
-        	i = st[--top];
-        	in[i] = false;
-        	id[i] = num;
-     	}while (i != now);
-     	++num;
-	}
+    if(dfn[u]==low[u])
+    {
+        scc++;
+        while(1)
+        {
+            int tmp=sstack[top--];
+            instack[tmp]=false;
+            belong[tmp]=scc;
+            num[scc]++;
+            if(tmp==u) break;
+        }
+    }
 }
-
-void Components(int N){ 
-    memset(dfn, 0, sizeof(dfn)); 
-    memset(low, 0, sizeof(low)); 
-	memset(in, 0, sizeof(in)); 
-	memset(id, 0xff, sizeof(id)); 
-    for (int i = top = num = tot = 0; i < N; ++i) if (!dfn[i]) tarjan(i); 
-}
-
-int main() {
-	int i, j, k;
-	int m, n;
-	int x, y, z;
-	
-	while (2 == scanf("%d %d", &n, &m)) {
-		for (i=0; i<n; ++i) E[i].clear();
-		for (i=0; i<m; ++i) {
-			scanf("%d %d %d %s", &x, &y, &z, op);
-			if (op[0] == 'A') {
-				if (z == 0) {
-					E[x+n].push_back(y);
-					E[y+n].push_back(x);
-				} else {
-					E[x].push_back(x+n);
-					E[y].push_back(y+n);
-				}
-			} else if (op[0] == 'O') {
-				if (z == 0) {
-					E[x+n].push_back(x);
-					E[y+n].push_back(y);
-				} else {
-					E[x].push_back(y+n);
-					E[y].push_back(x+n);
-				}
-			} else {
-				if (z == 0) {
-					E[x].push_back(y);
-					E[y].push_back(x);
-					E[x+n].push_back(y+n);
-					E[y+n].push_back(x+n);
-				} else {
-					E[x].push_back(y+n);
-					E[y].push_back(x+n);
-					E[x+n].push_back(y);
-					E[y+n].push_back(x);
-				}
-			}
-		}
-		Components(n<<1);
-		for (i=0; i<n; ++i) if (id[i] == id[i+n]) break;
-		if (i < n) puts("NO");
-		else puts("YES");
-	}
-	
-	return 0;
+int main()
+{
+    while(scanf("%d%d",&n,&m)!=EOF)
+    {
+        cnt=0;
+        scc=index=top=0;
+        memset(dfn,0,sizeof(dfn));
+        memset(head,-1,sizeof(head));
+        memset(num,0,sizeof(num));
+        memset(instack,0,sizeof(instack));
+        for(int i=1;i<=m;i++)
+        {
+            int a,b,c;char str[10];
+            scanf("%d%d%d%s",&a,&b,&c,str);
+            if(str[0]=='A')
+            {
+                if(c==1)
+                {
+                    addedge(a+n,b+n);
+                    addedge(b+n,a+n);
+                    addedge(a,a+n);
+                    addedge(b,b+n);
+                }
+                else if(c==0)
+                {
+                    addedge(b+n,a);
+                    addedge(a+n,b);
+                }
+            }
+            else if(str[0]=='O')
+            {
+                if(c==0)
+                {
+                    addedge(a,b);
+                    addedge(b,a);
+                    addedge(a+n,a);
+                    addedge(b+n,b);
+                }
+                else if(c==1)
+                {
+                    addedge(a,b+n);
+                    addedge(b,a+n);
+                }
+            }
+            else if(str[0]=='X')
+            {
+                if(c==1)
+                {
+                    addedge(a,b+n);
+                    addedge(b,a+n);
+                    addedge(b+n,a);
+                    addedge(a+n,b);
+                }
+                else if(c==0)
+                {
+                    addedge(a+n,b+n);
+                    addedge(b+n,a+n);
+                    addedge(a,b);
+                    addedge(b,a);
+                }
+            }
+        }
+        for(int i=0;i<n*2;i++)
+        {
+            if(!dfn[i]) tarjan(i);
+        }
+        bool flag=false;
+        for(int i=0;i<n;i++)
+        {
+            if(belong[i]==belong[i+n])
+            {
+                printf("NO\n");
+                flag=true;
+                break;
+            }
+        }
+        if(!flag)
+            printf("YES\n");
+    }
 }

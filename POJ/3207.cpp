@@ -5,7 +5,7 @@
 using namespace std; 
 
 #define MP(i,j) make_pair(i, j) 
-#define MAXN 1024 
+#define MAXN 10024 
 int dfn[MAXN], low[MAXN], id[MAXN], num, st[MAXN], top, in[MAXN], tot; 
 vector <int> E[MAXN];
 int x[MAXN], y[MAXN];
