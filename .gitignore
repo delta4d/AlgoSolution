@@ -1,4 +1,6 @@
 *.out
 *.swp
+*.swn
 *.o
 *.exe
+todo
