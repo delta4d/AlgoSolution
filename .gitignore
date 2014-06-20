@@ -3,4 +3,5 @@
 *.swn
 *.o
 *.exe
+*.hi
 todo
