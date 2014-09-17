@@ -1,3 +1,20 @@
+// O(1) space
+class Solution {
+public:
+    void connect(TreeLinkNode *root) {
+        for (TreeLinkNode *cur=root,*nxt,*a,*b; cur!=nullptr; cur=nxt) {
+            nxt = a = b = nullptr;
+            auto upd = [&](TreeLinkNode *p) {
+                if (p == nullptr) return;
+                if (nxt == nullptr) nxt = p;
+                a = b, b = p;
+                if (a != nullptr) a->next = b;
+            };
+            for (TreeLinkNode *i=cur; i!=nullptr; i=i->next) upd(i->left), upd(i->right);
+        }
+    }
+};
+
 // 96ms
 // tree traversal
 /**
