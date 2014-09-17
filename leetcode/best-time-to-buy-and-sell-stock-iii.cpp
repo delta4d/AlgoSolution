@@ -26,3 +26,22 @@ public:
         return ret;
     }
 };
+
+// 28ms
+// a short ver
+class Solution {
+public:
+    int maxProfit(vector<int> &prices) {
+        int n = (int)prices.size();
+        if (n == 0) return 0;
+        vector <int> suf(n), pre(n);
+        int mn = prices.front(), mx = prices.back();
+        for (int i=1; i<n; ++i) pre[i] = max(pre[i-1], prices[i] - mn), mn = min(mn, prices[i]);
+        for (int i=n-2; i>=0; --i) suf[i] = max(suf[i+1], mx - prices[i]), mx = max(mx, prices[i]);
+        int ret = suf.front();
+        for (int i=0; i+1<n; ++i) {
+            ret = max(ret, pre[i]+suf[i+1]);
+        }
+        return ret;
+    }
+};
