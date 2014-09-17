@@ -23,3 +23,32 @@ public:
         return ret;
     }
 };
+
+// iterative
+class Solution {
+public:
+    vector<int> postorderTraversal(TreeNode *root) {
+        if (root == nullptr) return {};
+        vector <int> ret;
+        vector <pair<TreeNode *, int>> st;
+        st.push_back({root, 0});
+        while (!st.empty()) {
+            auto *p = &st.back();
+            if (p->second == 0) {
+                ++(p->second);
+                if (p->first->left != nullptr) {
+                    st.push_back({p->first->left, 0});
+                }
+            } else if (p->second == 1) {
+                ++(p->second);
+                if (p->first->right != nullptr) {
+                    st.push_back({p->first->right, 0});
+                }
+            } else {
+                ret.push_back(p->first->val);
+                st.pop_back();
+            }
+        }
+        return ret;
+    }
+};
