@@ -38,3 +38,23 @@ public:
         return _max(root, mx);
     }
 };
+
+
+// a short ver
+class Solution {
+public:
+    int mx;
+    int f(TreeNode *root) {
+        if (root == nullptr) return 0;
+        int ret = root->val;
+        int lmx = f(root->left), rmx = f(root->right);
+        mx = max({mx, ret, ret+lmx, ret+rmx, ret+lmx+rmx});
+        ret = max({ret, ret+lmx, ret+rmx});
+        return ret;
+    }
+    int maxPathSum(TreeNode *root) {
+        mx = INT_MIN;
+        f(root);
+        return mx;
+    }
+};
