@@ -28,3 +28,23 @@ public:
         return ret->next;
     }
 };
+
+// 8ms
+// a little neat than previous one
+class Solution {
+public:
+    ListNode *reverseBetween(ListNode *head, int m, int n) {
+        if (m == n) return head;
+        ListNode *ret = new ListNode(-1), *i = ret, *j = ret;
+        ret->next = head;
+        for (int k=1; k<m; ++k) j = j->next;
+        i = j->next;
+        for (int k=m; k<n; ++k) {
+            ListNode *new_head = i->next;
+            i->next = i->next->next;
+            new_head->next = j->next;
+            j->next = new_head;
+        }
+        return ret->next;
+    }
+};
