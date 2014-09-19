@@ -1,3 +1,18 @@
+// 36ms
+// upd short ver
+class Solution {
+public:
+    ListNode *deleteDuplicates(ListNode *head) {
+        ListNode *ret = new ListNode(INT_MIN);
+        ret->next = head;
+        for (ListNode *i=ret; i->next!=nullptr; ) {
+            if (i->val == i->next->val) i->next = i->next->next;
+            else i = i->next;
+        }
+        return ret->next;
+    }
+};
+
 // 60ms
 // linked list basic
 /**
