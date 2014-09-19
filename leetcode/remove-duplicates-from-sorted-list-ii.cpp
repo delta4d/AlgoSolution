@@ -1,3 +1,23 @@
+// 28ms
+// upd short ver
+class Solution {
+public:
+    ListNode *deleteDuplicates(ListNode *head) {
+        ListNode *ret = new ListNode(-1);
+        ret->next = head;
+        for (ListNode *i=ret,*j; i->next!=nullptr; ) {
+            for (j=i; j->next!=nullptr&&j->next->val==i->next->val; j=j->next);
+            if (i->next == j) {
+                i = i->next;
+            } else {
+                i->next = j->next;
+            }
+        }
+        return ret->next;
+    }
+};
+
+
 // 52ms
 /**
  * Definition for singly-linked list.
