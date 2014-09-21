@@ -26,3 +26,19 @@ public:
         return head->next;
     }
 };
+
+// splice not create
+class Solution {
+public:
+    ListNode *mergeTwoLists(ListNode *l1, ListNode *l2) {
+        ListNode *ret = new ListNode(-1), *p1, *p2, *cc=ret;
+        for (p1=l1,p2=l2; p1!=nullptr&&p2!=nullptr; ) {
+            if (p1->val < p2->val) cc->next = p1, p1 = p1->next;
+            else cc->next = p2, p2 = p2->next;
+            cc = cc->next;
+        }
+        for (; p1 != nullptr; p1=p1->next,cc=cc->next) cc->next = p1;
+        for (; p2 != nullptr; p2=p2->next,cc=cc->next) cc->next = p2;
+        return ret->next;
+    }
+};
