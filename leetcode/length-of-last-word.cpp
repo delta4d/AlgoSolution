@@ -10,3 +10,17 @@ public:
         return i - j;
     }
 };
+
+// one run
+class Solution {
+public:
+    int lengthOfLastWord(const char *s) {
+        if (s == nullptr) return 0;
+        int ret = 0;
+        for (; *s; ++s) {
+            if (isspace(*s)) ret = ret > 0 ? -ret : ret;
+            else ret = ret < 0 ? 1 : ret + 1;
+        }
+        return abs(ret);
+    }
+};
