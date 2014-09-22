@@ -1,3 +1,30 @@
+// 68ms
+// one-run O(n)
+class Solution {
+public:
+    bool inter(Interval &a, Interval &ret) {
+        if (max(a.start, ret.start) > min(a.end, ret.end)) return false;
+        ret.start = min(ret.start, a.start), ret.end = max(ret.end, a.end);
+        return true;
+    }
+    vector<Interval> insert(vector<Interval> &intervals, Interval newInterval) {
+        if (intervals.empty()) return {newInterval};
+        vector <Interval> ret;
+        bool merged{};
+        for (auto &p: intervals) {
+            if (!inter(p, newInterval)) {
+                if (p.start > newInterval.end && !merged) {
+                    ret.push_back(newInterval); 
+                    merged = true;
+                }
+                ret.push_back(p);
+            }
+        }
+        if (!merged) ret.push_back(newInterval);
+        return ret;
+    }
+};
+
 // 80ms
 // binary search
 /**
