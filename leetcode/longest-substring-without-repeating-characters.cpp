@@ -38,3 +38,18 @@ public:
         return ret;
     }
 };
+
+// shorter ver
+class Solution {
+public:
+    int lengthOfLongestSubstring(string s) {
+        int last[256], ret = 0, n = (int)s.length();
+        memset(last, -1, sizeof(last));
+        for (int i=0,st=0; i<n; ++i) {
+            st = max(st, last[s[i]]+1);
+            last[s[i]] = i;
+            ret = max(ret, i-st+1);
+        }
+        return ret;
+    }
+};
